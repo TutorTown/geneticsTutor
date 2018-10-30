@@ -286,6 +286,13 @@ rule dummyInferFromCrossRule {
 					console.log("setting final conclusion");
 					modify(str1, "finalConclusion", "heterozygous");
 					break;
+				// Partial conclusion: homozygous
+				case 100:
+					let partialConclusions = str1.partialConclusions;
+					partialConclusions.push("homozygous");
+					modify(str1, "partialConclusions", partialConclusions);
+					modify(str1, "partialConclusionWritten", false);
+					break;
 			}
 		// Cross of two different strains
 		} else {
@@ -450,7 +457,6 @@ rule doneWithMandatoryInput {
 		not(s: Strain s.partialConclusions.length > 0 && !s.partialConclusionWritten && !s.finalConclusionWritten);
 	}
 	then {
-		alert("select cross");
 		modify(prob, "subgoal", "selectCross");	
 		halt();
 	}
