@@ -297,10 +297,19 @@ rule dummyInferFromCrossRule {
 					modify(str1, "finalConclusion", "heterozygous");
 					modify(str2, "finalConclusion", "heterozygous");
 					break;
-				// 1 Homozygous Recessive, 1 Heterozygous
+				// Partial Conclusions for both strains: homo-recessive, or heterozygous
 				case 50:
-					// modify(str1, "partialConclusions", "homozygous recessive or heterozygous");
-					// modify(str2, "partialConclusions", "homozygous recessive or heterozygous");
+					// Identify previous partial conclusions
+					let str1Partials = str1.partialConclusions;
+					let str2Partials = str2.partialConclusions;
+					// Add new partial conclusions
+					str1Partials.push("homozygous recessive or heterozygous");
+					str2Partials.push("homozygous recessive or heterozygous");
+					modify(str1, "partialConclusions", str1Partials);
+					modify(str2, "partialConclusions", str2Partials);
+					// Denote that partial conclussions need to be written
+					modify(str1, "partialConclusionWritten", false);
+					modify(str2, "partialConclusionWritten", false);
 					break;
 				// Depends
 				case 100:
@@ -364,7 +373,7 @@ rule dummyInferFromCrossRule {
 // You will need to write more rules for this subgoal,  based on your cognitive task analysis.
 //
 //--------------------------------------------------------------------------------------------
-rule enterInference {
+rule enterFinalInference {
 	when {
 		prob: Problem prob.subgoal == "enterInferences";
 		str1: Strain str1.finalConclusion && !str1.finalConclusionWritten;
@@ -380,7 +389,17 @@ rule enterInference {
 	}
 }
 
-
+rule enterPartialInference {
+	when {
+		prob: Problem prob.subgoal == "enterInferences";
+		str1: Strain !str1.partialConclusionWritten;
+	}
+	then {
+		if (checkSAI({selection: str1.iePartialConclusions, action: "UpdateComboBox", input: str1.partialConclusions[str1.partialConclusions.length -1 ]})) {
+			modify(str1, "partialConclusionWritten", true);
+		}
+	}
+}
 
 
 
