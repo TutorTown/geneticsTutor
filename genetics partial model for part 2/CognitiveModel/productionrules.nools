@@ -267,22 +267,62 @@ rule dummyInferFromCrossRule {
 	when {
 		prob: Problem prob.subgoal === "inferFromCross" {curCross: cName};
 		c: Cross c.name === cName {strains: crossStrains};
-		str1: Strain str1.name in crossStrains;
-		str2: Strain str2.name in crossStrains;
+		str1: Strain str1.name == crossStrains[0];
+		str2: Strain str2.name == crossStrains[1];
 	}
 	then {
 
 		//Determine Inferences
 		console.log("\nChecking whether to add inferences. Logging offsrpingInt[0]");
-		console.log(c.offspringInt[0]);
+		console.log(c);
+		console.log(str1);
+		console.log(str2);
 		// Self Cross
 		if (c.strains[0] == c.strains[1]) {
-			console.log(c);
+			// Both heterozygous
 			switch (c.offspringInt[0]) {
 				case 25:
 				case 75:
 					console.log("setting final conclusion");
 					modify(str1, "finalConclusion", "heterozygous");
+					break;
+			}
+		// Cross of two different strains
+		} else {
+			console.log("Crossed 2 different strains");
+			switch (c.offspringInt[0]) {
+				// Both Heterozygous
+				case 25:
+				case 75:
+					modify(str1, "finalConclusion", "heterozygous");
+					modify(str2, "finalConclusion", "heterozygous");
+					break;
+				// 1 Homozygous Recessive, 1 Heterozygous
+				case 50:
+					// modify(str1, "partialConclusions", "homozygous recessive or heterozygous");
+					// modify(str2, "partialConclusions", "homozygous recessive or heterozygous");
+					break;
+				// Depends
+				case 100:
+					console.log("100/0 offspring");
+					// Can only make conclusion if strains are different phenotypes
+					if (str1.phenotype != str2.phenotype) {
+						console.log("Different phenotypes");
+						// Identify which strain has same phenotype as offspring: this is dominant
+							// First crossed strain is homozygous dominant
+						if (str1.phenotype == c.offspringInt[1]) {
+							console.log("first strain is dominant");
+							modify(str1, "finalConclusion", "homozygous dominant");
+							modify(str2, "finalConclusion", "homozygous recessive");
+							// First crossed strain is homozygous recessive
+						} else {
+							console.log("first strain is homozygous recessive");
+							modify(str1, "finalConclusion", "homozygous recessive");
+							modify(str2, "finalConclusion", "homozygous dominant");
+						}
+					} else {
+						console.log("same phenotype");
+					}
 					break;
 			}
 		}
@@ -291,7 +331,7 @@ rule dummyInferFromCrossRule {
 		retract(c);
 		modify(prob, "subgoal", "makeInferences");
 
-		halt();
+		// halt();
 	}
 }
 // Notes re dummyInferFromCrossRule
@@ -326,7 +366,7 @@ rule dummyInferFromCrossRule {
 //--------------------------------------------------------------------------------------------
 rule enterInference {
 	when {
-		prob: Problem prob.subgoal == "makeInferences";
+		prob: Problem prob.subgoal == "enterInferences";
 		str1: Strain str1.finalConclusion && !str1.finalConclusionWritten;
 	}
 	then {
@@ -334,7 +374,7 @@ rule enterInference {
 		console.log(str1);
 		console.log(str1.ieFinalConclusion);
 		if (checkSAI({selection: str1.ieFinalConclusion, action: "UpdateComboBox", input: str1.finalConclusion})) {
-			console.log("\n\nWOOOOOOOOOOO");
+			console.log("\nMached inference!");
 			modify(str1, "finalConclusionWritten", true);
 		}
 	}
@@ -355,8 +395,7 @@ rule doneInferencing {
 		prob: Problem prob.subgoal === "makeInferences";
 	}
 	then {
-		console.log("enter inferences");
-		alert("enter inferences");
+		console.log("done inferring; time to enter inferences");
 		modify(prob, "subgoal", "enterInferences");
 		halt();
 	}
@@ -394,6 +433,7 @@ rule doneWithMandatoryInput {
 	then {
 		alert("select cross");
 		modify(prob, "subgoal", "selectCross");	
+		halt();
 	}
 }
 // Notes doneWithMandatoryInput
