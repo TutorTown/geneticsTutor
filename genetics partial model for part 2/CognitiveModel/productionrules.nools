@@ -273,36 +273,45 @@ rule dummyInferFromCrossRule {
 	then {
 
 		//Determine Inferences
-		console.log("\nChecking whether to add inferences. Logging offsrpingInt[0]");
-		console.log(c);
-		console.log(str1);
-		console.log(str2);
 		// Self Cross
 		if (c.strains[0] == c.strains[1]) {
 			// Both heterozygous
+			let otherPhenotype = null;
 			switch (c.offspringInt[0]) {
 				case 25:
 				case 75:
-					console.log("setting final conclusion");
 					modify(str1, "finalConclusion", "heterozygous");
+					modify(prob, "dominantPhenotype", str1.phenotype);
+					if (c.offspringInt[1] != str1.phenotype) {
+						otherPhenotype = c.offspringInt[1];
+					} else {
+						otherPhenotype = c.offspringInt[3];
+					}
+					modify(prob, "recessivePhenotype", otherPhenotype);
 					break;
 				// Partial conclusion: homozygous
 				case 100:
 					let partialConclusions = str1.partialConclusions;
 					partialConclusions.push("homozygous");
 					modify(str1, "partialConclusions", partialConclusions);
-					modify(str1, "partialConclusionWritten", false);
+					modify(str1, "needToWritePartialConclusion", true);
 					break;
 			}
 		// Cross of two different strains
 		} else {
-			console.log("Crossed 2 different strains");
 			switch (c.offspringInt[0]) {
 				// Both Heterozygous
 				case 25:
 				case 75:
 					modify(str1, "finalConclusion", "heterozygous");
 					modify(str2, "finalConclusion", "heterozygous");
+					modify(prob, "dominantPhenotype", str1.phenotype);
+					if (c.offspringInt[1] != str1.phenotype) {
+						otherPhenotype = c.offspringInt[1];
+					} else {
+						otherPhenotype = c.offspringInt[3];
+					}
+					modify(prob, "recessivePhenotype", otherPhenotype);					
 					break;
 				// Partial Conclusions for both strains: homo-recessive, or heterozygous
 				case 50:
@@ -315,8 +324,8 @@ rule dummyInferFromCrossRule {
 					modify(str1, "partialConclusions", str1Partials);
 					modify(str2, "partialConclusions", str2Partials);
 					// Denote that partial conclussions need to be written
-					modify(str1, "partialConclusionWritten", false);
-					modify(str2, "partialConclusionWritten", false);
+					modify(str1, "needToWritePartialConclusion", true);
+					modify(str2, "needToWritePartialConclusion", true);
 					break;
 				// Depends
 				case 100:
@@ -330,11 +339,18 @@ rule dummyInferFromCrossRule {
 							console.log("first strain is dominant");
 							modify(str1, "finalConclusion", "homozygous dominant");
 							modify(str2, "finalConclusion", "homozygous recessive");
+
+							// Capture which phenotypes are dominant or recessive
+							modify(prob, "dominantPhenotype", str1.phenotype);
+							modify(prob, "recessivePhenotype", str2.phenotype);
 							// First crossed strain is homozygous recessive
 						} else {
 							console.log("first strain is homozygous recessive");
 							modify(str1, "finalConclusion", "homozygous recessive");
 							modify(str2, "finalConclusion", "homozygous dominant");
+							// Capture which phenotypes are dominant or recessive
+							modify(prob, "dominantPhenotype", str2.phenotype);
+							modify(prob, "recessivePhenotype", str1.phenotype);
 						}
 					} else {
 						console.log("same phenotype");
@@ -363,13 +379,31 @@ rule dummyInferFromCrossRule {
 
 
 
-// rule makeInferences {
-// 	when {
-// 		prob: Problem prob.subgoal == "makeInferences";
-// 	} then {
-// 		pr
-// 	}
-// }
+rule makeInferences {
+	when {
+		prob: Problem prob.subgoal == "makeInferences";
+		str1: Strain !str1.finalConclusionWritten && str1.partialConclusions.length > 0 && prob.dominantPhenotype;
+	} then {
+		let lastPartialConclusion = str1.partialConclusions[str1.partialConclusions.length - 1];
+		switch (lastPartialConclusion) {
+			case 'homozygous':
+				if (problem.dominantPhenotype == str1.phenotype) {
+					modify(str1, "finalConclusion", "homozygous dominant");
+				} else {
+					modify(str1, "finalConclusion", "homozygous recessive");
+				}
+				break;
+			case 'homozygous recessive or heterozygous':
+				if (prob.dominantPhenotype == str1.phenotype) {
+					modify(str1, "finalConclusion", "heterozygous");
+				} else {
+					modify(str1, "finalConclusion", "homozygous recessive");
+				}
+				break;
+		}
+		modify(str1, "finalConclusionWritten", true);
+	}
+}
 
 
 
@@ -381,14 +415,15 @@ rule dummyInferFromCrossRule {
 //
 //--------------------------------------------------------------------------------------------
 rule enterFinalInference {
+	salience: 1;
 	when {
 		prob: Problem prob.subgoal == "enterInferences";
 		str1: Strain str1.finalConclusion && !str1.finalConclusionWritten;
 	}
 	then {
-		console.log("Entering Inference!");
-		console.log(str1);
-		console.log(str1.ieFinalConclusion);
+		// console.log("Entering Inference!");
+		// console.log(str1);
+		// console.log(str1.ieFinalConclusion);
 		if (checkSAI({selection: str1.ieFinalConclusion, action: "UpdateComboBox", input: str1.finalConclusion})) {
 			console.log("\nMached inference!");
 			modify(str1, "finalConclusionWritten", true);
@@ -397,13 +432,15 @@ rule enterFinalInference {
 }
 
 rule enterPartialInference {
+	salience: 1;
 	when {
 		prob: Problem prob.subgoal == "enterInferences";
-		str1: Strain !str1.partialConclusionWritten;
+		str1: Strain str1.needToWritePartialConclusion;
 	}
 	then {
 		if (checkSAI({selection: str1.iePartialConclusions, action: "UpdateComboBox", input: str1.partialConclusions[str1.partialConclusions.length -1 ]})) {
-			modify(str1, "partialConclusionWritten", true);
+			console.log("ENTERING CORRECT PARTIAL INFERENCE");
+			modify(str1, "needToWritePartialConclusion", false);
 		}
 	}
 }
@@ -454,7 +491,7 @@ rule doneWithMandatoryInput {
 	when {
 		prob: Problem prob.subgoal === "enterInferences";
 		not(s: Strain s.finalConclusion && !s.finalConclusionWritten);
-		not(s: Strain s.partialConclusions.length > 0 && !s.partialConclusionWritten && !s.finalConclusionWritten);
+		not(s: Strain s.partialConclusions.length > 0 && !s.needToWritePartialConclusion && !s.finalConclusionWritten);
 	}
 	then {
 		modify(prob, "subgoal", "selectCross");	

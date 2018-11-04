@@ -13,8 +13,8 @@ global cross1 = {strains: ["Pink-1", "Pink-1"],
 			};
 			
 global cross2 = {strains: ["Pink-1", "Blue-1"],
-				offspringExt: "75% Blue, 25% Pink",
-				offspringInt: [75, "blue", 25, "pink"]
+				offspringExt: "50% Blue, 50% Pink",
+				offspringInt: [50, "blue", 50, "pink"]
 			};
 
 global cross3 = {strains: ["Pink-1", "Blue-2"],
@@ -28,8 +28,8 @@ global cross4 = {strains: ["Blue-1", "Blue-1"],
 			};
 			
 global cross5 = {strains: ["Blue-1", "Blue-2"],
-				offspringExt: "100% Blue",
-				offspringInt: [100, "blue"]
+				offspringExt: "25% pink, 75% blue",
+				offspringInt: [25, "pink", 75, "blue"]
 			};
 
 global cross6 = {strains: ["Blue-2", "Blue-2"],

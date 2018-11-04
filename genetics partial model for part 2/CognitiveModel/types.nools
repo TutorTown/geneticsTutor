@@ -17,6 +17,8 @@ define Problem {
 		this.subgoal = "selectCross";
 		this.strains = s;
 		this.interfaceRows = i;
+		this.dominantPhenotype = null;
+		this.recessivePhenotype = null;
 	}
 }
 
@@ -25,7 +27,7 @@ define Strain {
 	n: null,
 	phenotype: null,
 	partialConclusions: null,
-	partialConclusionWritten: false,
+	needToWritePartialConclusion: false,
 	finalConclusion: null,
 	finalConclusionWritten: null,
 	iePartialConclusions: null,
@@ -35,7 +37,7 @@ define Strain {
 		this.n = n;
 		this.phenotype = pheno;
 		this.partialConclusions = [];
-		this.partialConclusionWritten = false;
+		this.needToWritePartialConclusion = false;
 		this.finalConclusion = "";
 		this.finalConclusionWritten = false;
 		this.iePartialConclusions = iePartial;
