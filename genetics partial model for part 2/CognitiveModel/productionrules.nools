@@ -382,7 +382,7 @@ rule dummyInferFromCrossRule {
 rule makeInferences {
 	when {
 		prob: Problem prob.subgoal == "makeInferences";
-		str1: Strain !str1.finalConclusionWritten && str1.partialConclusions.length > 0 && prob.dominantPhenotype;
+		str1: Strain !str1.finalConclusionWritten && !str1.finalConclusion && str1.partialConclusions.length > 0 && prob.dominantPhenotype;
 	} then {
 		let lastPartialConclusion = str1.partialConclusions[str1.partialConclusions.length - 1];
 		switch (lastPartialConclusion) {
@@ -401,7 +401,6 @@ rule makeInferences {
 				}
 				break;
 		}
-		modify(str1, "finalConclusionWritten", true);
 	}
 }
 
@@ -425,8 +424,12 @@ rule enterFinalInference {
 		// console.log(str1);
 		// console.log(str1.ieFinalConclusion);
 		if (checkSAI({selection: str1.ieFinalConclusion, action: "UpdateComboBox", input: str1.finalConclusion})) {
-			console.log("\nMached inference!");
+			console.log("\nMached inference! Updating strain " + str1.name + " to have finalConclusionWritten = true");
 			modify(str1, "finalConclusionWritten", true);
+			console.log(str1);
+			halt();
+		} else {
+			backtrack();
 		}
 	}
 }
@@ -441,6 +444,8 @@ rule enterPartialInference {
 		if (checkSAI({selection: str1.iePartialConclusions, action: "UpdateComboBox", input: str1.partialConclusions[str1.partialConclusions.length -1 ]})) {
 			console.log("ENTERING CORRECT PARTIAL INFERENCE");
 			modify(str1, "needToWritePartialConclusion", false);
+		} else {
+			backtrack();
 		}
 	}
 }
@@ -488,6 +493,7 @@ rule doneInferencing {
 //    Move on to the selectCross subgoal
 
 rule doneWithMandatoryInput {
+	salience: -5;
 	when {
 		prob: Problem prob.subgoal === "enterInferences";
 		not(s: Strain s.finalConclusion && !s.finalConclusionWritten);
@@ -495,7 +501,7 @@ rule doneWithMandatoryInput {
 	}
 	then {
 		modify(prob, "subgoal", "selectCross");	
-		halt();
+		// halt();
 	}
 }
 // Notes doneWithMandatoryInput
@@ -520,3 +526,15 @@ rule doneWithMandatoryInput {
 
 // Note: Should the done rule test for a specific subgoal?  Which subgoal?
 
+rule done {
+	when {
+		not(s: Strain !s.finalConclusion);
+	}
+	then {
+		if (checkSAI({selection: 'done', action: 'ButtonPressed', input: -1})) {
+			halt();
+		} else {
+			backtrack();
+		}
+	}
+}
