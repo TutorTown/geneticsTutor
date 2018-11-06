@@ -387,7 +387,7 @@ rule makeInferences {
 		let lastPartialConclusion = str1.partialConclusions[str1.partialConclusions.length - 1];
 		switch (lastPartialConclusion) {
 			case 'homozygous':
-				if (problem.dominantPhenotype == str1.phenotype) {
+				if (prob.dominantPhenotype == str1.phenotype) {
 					modify(str1, "finalConclusion", "homozygous dominant");
 				} else {
 					modify(str1, "finalConclusion", "homozygous recessive");
