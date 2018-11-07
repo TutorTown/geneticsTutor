@@ -377,7 +377,18 @@ rule dummyInferFromCrossRule {
 
 
 
-
+rule makeAdditionalInference 
+{
+ when
+ {
+   prob : Problem prob.subgoal == "makeInferences" && prob.recessivePhenotype {recessivePhenotype : recessiveName};
+   str1 : Strain !str1.finalConclusion && str1.phenotype == recessiveName;
+ }
+ then
+ {
+    modify(str1,"finalConclusion","homozygous recessive"); 
+ }
+}
 
 rule makeInferences {
 	when {
@@ -444,6 +455,7 @@ rule enterPartialInference {
 		if (checkSAI({selection: str1.iePartialConclusions, action: "UpdateComboBox", input: str1.partialConclusions[str1.partialConclusions.length -1 ]})) {
 			console.log("ENTERING CORRECT PARTIAL INFERENCE");
 			modify(str1, "needToWritePartialConclusion", false);
+			halt();
 		} else {
 			backtrack();
 		}
@@ -497,7 +509,7 @@ rule doneWithMandatoryInput {
 	when {
 		prob: Problem prob.subgoal === "enterInferences";
 		not(s: Strain s.finalConclusion && !s.finalConclusionWritten);
-		not(s: Strain s.partialConclusions.length > 0 && !s.needToWritePartialConclusion && !s.finalConclusionWritten);
+		not(s: Strain s.partialConclusions.length > 0 && s.needToWritePartialConclusion && !s.finalConclusionWritten);
 	}
 	then {
 		modify(prob, "subgoal", "selectCross");	
