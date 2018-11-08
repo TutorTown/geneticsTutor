@@ -1,0 +1,38 @@
+import("productionrules.nools");
+
+global probname = "Beans";
+global probtxt = "Most beans are green, but some are yellow.  Green and yellow beans were collected.  Make crosses between the three strains provided to determine all you can about their genotypes.";
+
+global strain1 = {n: 1, name: "Yellow-1", phenotype: "yellow"};
+global strain2 = {n: 2, name: "Green-1", phenotype: "green"};
+global strain3 = {n: 3, name: "Green-2", phenotype: "green"};
+
+global cross1 = {strains: ["Yellow-1", "Yellow-1"],
+				offspringExt: "100% Yellow",
+				offspringInt: [100, "yellow"]
+			};
+			
+global cross2 = {strains: ["Yellow-1", "Green-1"],
+				offspringExt: "50% Yellow, 50% Green",
+				offspringInt: [50, "yellow", 50, "green"]
+			};
+
+global cross3 = {strains: ["Yellow-1", "Green-2"],
+				offspringExt: "50% Yellow, 50% Green",
+				offspringInt: [50, "yellow", 50, "green"]
+			};
+
+global cross4 = {strains: ["Green-1", "Green-1"],
+				offspringExt: "75% Green, 25% Yellow",
+				offspringInt: [75, "green", 25, "yellow"]
+			};
+			
+global cross5 = {strains: ["Green-1", "Green-2"],
+				offspringExt: "25% Yellow, 75% Green",
+				offspringInt: [25, "yellow", 75, "green"]
+			};
+
+global cross6 = {strains: ["Green-2", "Green-2"],
+				offspringExt: "25% Yellow, 75% Green",
+				offspringInt: [25, "yellow", 75, "gren"]
+			};

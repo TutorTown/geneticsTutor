@@ -573,6 +573,22 @@ rule inferFinalFromBothPartials
 	}
 }
 
+
+// doneInferencing
+// IF we have a makeInferences subgoal
+// THEN move on to the enterInferences subgoal
+//
+rule doneInferencing {
+	salience: -5;         //  critical!!
+	when {
+		prob: Problem prob.subgoal === "makeInferences";
+	}
+	then {
+		modify(prob, "subgoal", "enterInferences");
+		halt();
+	}
+}
+
 //--------------------------------------------------------------------------------------------
 //
 // Rules for the makeInferences subgoal
@@ -613,37 +629,6 @@ rule enterPartialInference {
 }
 
 
-
-
-// doneInferencing
-// IF we have a makeInferences subgoal
-// THEN move on to the enterInferences subgoal
-//
-rule doneInferencing {
-	salience: -5;         //  critical!!
-	when {
-		prob: Problem prob.subgoal === "makeInferences";
-	}
-	then {
-		modify(prob, "subgoal", "enterInferences");
-		halt();
-	}
-}
-// Notes re dummyInferFromCrossRule
-// 1. This is NOT a dummy rule; i.e., this rule will be needed in the final version of 
-//		your model
-// Questions to help your understanding
-// 1. Why is this rule needed?
-// 2. Why is it critical that is has low salience? (This may be more clear when you  have 
-//		additional rules, but perhaps you can already see why before you write those rules.)
-
-//--------------------------------------------------------------------------------------------
-//
-// Rules for the enterInferences subgoal
-//
-// You will need to write more rules for this subgoal.
-//
-//--------------------------------------------------------------------------------------------
 
 // Notes doneWithMandatoryInput
 // IF we have an enterInferences subgoal
