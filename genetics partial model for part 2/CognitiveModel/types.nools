@@ -12,13 +12,20 @@ define Problem {
 	curCross: null,
 	strains: null,
 	interfaceRows: null,
-	constructor: function(n, s, i) {
+	constructor: function(n, s, i, phenotypes) {
 		this.name = n;
 		this.subgoal = "selectCross";
 		this.strains = s;
 		this.interfaceRows = i;
 		this.dominantPhenotype = null;
 		this.recessivePhenotype = null;
+		let self = this;
+		this.phenotypes = []; // list of unique phenotype names
+		phenotypes.forEach(function(phenotype) {
+			if (self.phenotypes.indexOf(phenotype) < 0) {
+				self.phenotypes.push(phenotype);
+			}
+		});
 	}
 }
 
