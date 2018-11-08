@@ -360,7 +360,7 @@ rule diffStrainDiffPheno100 {
 		modify(prob, "subgoal", "makeInferences");
 	}
 }
-rule diffStrainSamePheno50 {
+rule diffStrainDiffPheno50 {
 	when {
 		prob: Problem prob.subgoal === "inferFromCross" {curCross: cName};
 		c: Cross c.name === cName  && c.strains[0] != c.strains[1] && c.offspringInt[0] == 50 {strains: crossStrains};
@@ -470,14 +470,11 @@ rule diffStrainSamePheno100 {
 // 					break;
 // 				// Depends
 // 				case 100:
-// 					console.log("100/0 offspring");
 // 					// Can only make conclusion if strains are different phenotypes
 // 					if (str1.phenotype != str2.phenotype) {
-// 						console.log("Different phenotypes");
 // 						// Identify which strain has same phenotype as offspring: this is dominant
 // 							// First crossed strain is homozygous dominant
 // 						if (str1.phenotype == c.offspringInt[1]) {
-// 							console.log("first strain is dominant");
 // 							modify(str1, "finalConclusion", "homozygous dominant");
 // 							modify(str2, "finalConclusion", "homozygous recessive");
 
@@ -486,7 +483,6 @@ rule diffStrainSamePheno100 {
 // 							modify(prob, "recessivePhenotype", str2.phenotype);
 // 							// First crossed strain is homozygous recessive
 // 						} else {
-// 							console.log("first strain is homozygous recessive");
 // 							modify(str1, "finalConclusion", "homozygous recessive");
 // 							modify(str2, "finalConclusion", "homozygous dominant");
 // 							// Capture which phenotypes are dominant or recessive
@@ -494,7 +490,6 @@ rule diffStrainSamePheno100 {
 // 							modify(prob, "recessivePhenotype", str1.phenotype);
 // 						}
 // 					} else {
-// 						console.log("same phenotype");
 // 					}
 // 					break;
 // 			}
@@ -563,7 +558,7 @@ rule inferFinalFromBothPartials
 	when
 	{
       prob: Problem prob.subgoal == "makeInferences";
-      str1 : Strain !str1.finalConclusionWritten && !str1.finalConclusion && "homozygous recessive or heterozygous" in str1.partialConclusions && "homozygous" in str1.partialConclusions;
+      str1 : Strain !str1.finalConclusion && "homozygous recessive or heterozygous" in str1.partialConclusions && "homozygous" in str1.partialConclusions;
 	}
 	then
 	{
@@ -592,13 +587,8 @@ rule enterFinalInference {
 		str1: Strain str1.finalConclusion && !str1.finalConclusionWritten;
 	}
 	then {
-		// console.log("Entering Inference!");
-		// console.log(str1);
-		// console.log(str1.ieFinalConclusion);
 		if (checkSAI({selection: str1.ieFinalConclusion, action: "UpdateComboBox", input: str1.finalConclusion})) {
-			console.log("\nMached inference! Updating strain " + str1.name + " to have finalConclusionWritten = true");
 			modify(str1, "finalConclusionWritten", true);
-			console.log(str1);
 			halt();
 		} else {
 			backtrack();
@@ -614,7 +604,6 @@ rule enterPartialInference {
 	}
 	then {
 		if (checkSAI({selection: str1.iePartialConclusions, action: "UpdateComboBox", input: str1.partialConclusions[str1.partialConclusions.length -1 ]})) {
-			console.log("ENTERING CORRECT PARTIAL INFERENCE");
 			modify(str1, "needToWritePartialConclusion", false);
 			halt();
 		} else {
@@ -636,7 +625,6 @@ rule doneInferencing {
 		prob: Problem prob.subgoal === "makeInferences";
 	}
 	then {
-		console.log("done inferring; time to enter inferences");
 		modify(prob, "subgoal", "enterInferences");
 		halt();
 	}
