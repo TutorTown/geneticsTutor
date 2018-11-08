@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 
-<stateGraph firstCheckAllStates="false" caseInsensitive="true" unordered="false" lockWidget="true" hintPolicy="Use Both Kinds of Bias" version="2.1" suppressStudentFeedback="Show All Feedback" highlightRightSelection="true" startStateNodeName="%(startStateNodeName)%" tutorType="Example-tracing Tutor">
+<stateGraph firstCheckAllStates="false" caseInsensitive="true" unordered="false" lockWidget="true" hintPolicy="Use Both Kinds of Bias" version="4.0" suppressStudentFeedback="Show All Feedback" highlightRightSelection="true" startStateNodeName="%(startStateNodeName)%" tutorType="Example-tracing Tutor">
     <startNodeMessages>
         <message>
             <verb>NotePropertySet</verb>
@@ -1610,7 +1610,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>1</sourceID>
@@ -1657,7 +1657,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>32</sourceID>
@@ -1704,7 +1704,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Infer_from_Cross Infer_from_Cross</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Enter_Inferences Enter_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>34</sourceID>
@@ -1751,7 +1755,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>35</sourceID>
@@ -1798,7 +1802,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>36</sourceID>
@@ -2234,7 +2238,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Infer_from_Cross Infer_from_Cross</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Enter_Inferences Enter_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>48</sourceID>
@@ -2340,7 +2348,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Infer_from_Cross Infer_from_Cross</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Enter_Inferences Enter_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>49</sourceID>
@@ -3089,6 +3101,22 @@
         <destID>46</destID>
         <traversalCount>0</traversalCount>
     </edge>
+    <productionRule>
+        <ruleName>Infer_from_Cross</ruleName>
+        <productionSet>Infer_from_Cross</productionSet>
+        <label>Infer from Cross</label>
+    </productionRule>
+    <productionRule>
+        <ruleName>Select_Cross</ruleName>
+        <productionSet>Select_Cross</productionSet>
+        <label>Select Cross</label>
+        <description>Choosing strains to cross</description>
+    </productionRule>
+    <productionRule>
+        <ruleName>Enter_Inferences</ruleName>
+        <productionSet>Enter_Inferences</productionSet>
+        <label>Enter Inferences</label>
+    </productionRule>
     <EdgesGroups ordered="true"></EdgesGroups>
 </stateGraph>
 

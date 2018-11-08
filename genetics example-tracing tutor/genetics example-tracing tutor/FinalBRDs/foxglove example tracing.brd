@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 
-<stateGraph firstCheckAllStates="false" caseInsensitive="true" unordered="false" lockWidget="true" hintPolicy="Use Both Kinds of Bias" version="2.1" suppressStudentFeedback="Show All Feedback" highlightRightSelection="true" startStateNodeName="%(startStateNodeName)%" tutorType="Example-tracing Tutor">
+<stateGraph firstCheckAllStates="false" caseInsensitive="true" unordered="false" lockWidget="true" hintPolicy="Use Both Kinds of Bias" version="4.0" suppressStudentFeedback="Show All Feedback" highlightRightSelection="true" startStateNodeName="%(startStateNodeName)%" tutorType="Example-tracing Tutor">
     <startNodeMessages>
         <message>
             <verb>NotePropertySet</verb>
@@ -3553,56 +3553,56 @@
         <text>state14</text>
         <uniqueID>15</uniqueID>
         <dimension>
-            <x>118</x>
-            <y>665</y>
+            <x>208</x>
+            <y>717</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state15</text>
         <uniqueID>16</uniqueID>
         <dimension>
-            <x>125</x>
-            <y>893</y>
+            <x>215</x>
+            <y>945</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state16</text>
         <uniqueID>17</uniqueID>
         <dimension>
-            <x>125</x>
-            <y>1003</y>
+            <x>215</x>
+            <y>1055</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state17</text>
         <uniqueID>18</uniqueID>
         <dimension>
-            <x>125</x>
-            <y>1113</y>
+            <x>215</x>
+            <y>1165</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state18</text>
         <uniqueID>19</uniqueID>
         <dimension>
-            <x>129</x>
-            <y>1317</y>
+            <x>219</x>
+            <y>1369</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state19</text>
         <uniqueID>20</uniqueID>
         <dimension>
-            <x>129</x>
-            <y>1427</y>
+            <x>219</x>
+            <y>1479</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state20</text>
         <uniqueID>21</uniqueID>
         <dimension>
-            <x>129</x>
-            <y>1537</y>
+            <x>219</x>
+            <y>1589</y>
         </dimension>
     </node>
     <node locked="false" doneState="true">
@@ -3617,8 +3617,8 @@
         <text>Done_2</text>
         <uniqueID>25</uniqueID>
         <dimension>
-            <x>166</x>
-            <y>1658</y>
+            <x>256</x>
+            <y>1710</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
@@ -3729,16 +3729,16 @@
         <text>state38</text>
         <uniqueID>39</uniqueID>
         <dimension>
-            <x>122</x>
-            <y>774</y>
+            <x>212</x>
+            <y>826</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
         <text>state39</text>
         <uniqueID>40</uniqueID>
         <dimension>
-            <x>128</x>
-            <y>1210</y>
+            <x>218</x>
+            <y>1262</y>
         </dimension>
     </node>
     <node locked="false" doneState="false">
@@ -3804,7 +3804,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>1</sourceID>
@@ -3992,7 +3992,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>2</sourceID>
@@ -4039,7 +4039,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>13</sourceID>
@@ -4086,7 +4086,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>14</sourceID>
@@ -4133,7 +4133,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>16</sourceID>
@@ -4180,7 +4180,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Select_Cross Select_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>17</sourceID>
@@ -4227,7 +4227,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Enter_Inferences Enter_Inferences</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Infer_from_Cross Infer_from_Cross</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>19</sourceID>
@@ -4274,7 +4278,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Enter_Inferences Enter_Inferences</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Make_Inferences Make_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>20</sourceID>
@@ -4368,7 +4376,7 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Done Done</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>21</sourceID>
@@ -4957,7 +4965,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Infer_from_Cross Infer_from_Cross</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Enter_Inferences Enter_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>38</sourceID>
@@ -5063,7 +5075,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Infer_from_Cross Infer_from_Cross</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Enter_Inferences Enter_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>39</sourceID>
@@ -5169,7 +5185,11 @@
         </actionLabel>
         <preCheckedStatus>No-Applicable</preCheckedStatus>
         <rule>
-            <text>unnamed</text>
+            <text>Infer_from_Cross Infer_from_Cross</text>
+            <indicator>-1</indicator>
+        </rule>
+        <rule>
+            <text>Enter_Inferences Enter_Inferences</text>
             <indicator>-1</indicator>
         </rule>
         <sourceID>40</sourceID>
@@ -5494,6 +5514,31 @@
         <destID>33</destID>
         <traversalCount>0</traversalCount>
     </edge>
+    <productionRule>
+        <ruleName>Infer_from_Cross</ruleName>
+        <productionSet>Infer_from_Cross</productionSet>
+        <label>Infer from Cross</label>
+    </productionRule>
+    <productionRule>
+        <ruleName>Done</ruleName>
+        <productionSet>Done</productionSet>
+    </productionRule>
+    <productionRule opportunities="1">
+        <ruleName>Select_Cross</ruleName>
+        <productionSet>Select_Cross</productionSet>
+        <label>Select Cross</label>
+        <description>Choosing strains to cross</description>
+    </productionRule>
+    <productionRule>
+        <ruleName>Enter_Inferences</ruleName>
+        <productionSet>Enter_Inferences</productionSet>
+        <label>Enter Inferences</label>
+    </productionRule>
+    <productionRule>
+        <ruleName>Make_Inferences</ruleName>
+        <productionSet>Make_Inferences</productionSet>
+        <label>Make Inferences</label>
+    </productionRule>
     <EdgesGroups ordered="true"></EdgesGroups>
 </stateGraph>
 
