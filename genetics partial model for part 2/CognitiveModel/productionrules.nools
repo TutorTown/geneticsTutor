@@ -689,7 +689,7 @@ rule doneWithMandatoryInput {
 
 rule done {
 	when {
-		not(s: Strain !s.finalConclusion);
+		not(s: Strain !s.finalConclusionWritten);
 	}
 	then {
 		if (checkSAI({selection: 'done', action: 'ButtonPressed', input: -1})) {
